@@ -13,8 +13,18 @@
   <ItemGroup>
     <Content Remove="Views\Home\About.cshtml" />
     <Content Remove="wwwroot\lib\jquery-validation\.bower.json" />
+    <Content Remove="Views\Shared\Index.cshtml" />
+    <Content Remove="wwwroot\lib\bootstrap\.bower.json" />
+    <Content Remove="wwwroot\lib\jquery\.bower.json" />
+    <Content Remove="wwwroot\lib\jquery\dist\jquery.js" />
+    <Content Remove="wwwroot\lib\jquery\LICENSE.txt" />
+    <Content Remove="wwwroot\lib\jquery\dist\jquery.min.js" />
+    <Content Remove="wwwroot\lib\jquery\dist\jquery.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Models\Purchases.cs" />
   </ItemGroup>
 </Project>

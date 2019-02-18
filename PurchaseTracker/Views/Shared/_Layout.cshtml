@@ -1,12 +1,17 @@
 ﻿<!DOCTYPE html>
 
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>@ViewBag.Title</title>
-    </head>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://kendo.cdn.telerik.com/2019.1.115/js/kendo.all.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2019.1.115/js/kendo.aspnetmvc.min.js"></script>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.1.115/styles/kendo.common-bootstrap.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.1.115/styles/kendo.bootstrap.min.css" />
+</head>
     <body>
-        <div>
+        <div class="container">
             @RenderBody()
         </div>
     </body>

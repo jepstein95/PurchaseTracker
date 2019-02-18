@@ -15,34 +15,6 @@ namespace PurchaseTracker
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Waddup");
-
-
-            try {
-                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-                builder.DataSource = "(local)";   // update me
-                builder.UserID = "root";              // update me
-                builder.Password = "asdfghj";      // update me
-                builder.InitialCatalog = "purchase_tracker";
-
-                Console.Write(builder.ConnectionString);
-
-                // Connect to SQL
-                Console.Write("Connecting to SQL Server ... ");
-                using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
-                {
-                    connection.Open();
-                    Console.WriteLine("Done.");
-                }
-            }
-            catch (SqlException e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-
-            Console.WriteLine("All done. Press any key to finish...");
-            Console.ReadKey(true);
-
             CreateWebHostBuilder(args).Build().Run();
         }
 
