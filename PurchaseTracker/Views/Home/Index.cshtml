@@ -1,9 +1,58 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Purchase Tracker";
 }
 
-@(Html.Kendo().ListView<Purchase>()
-    .Name("listView")
-    .TagName("ul")
-    .ClientTemplateId("purchaseTemplate")
-)
+<script type="text/x-kendo-tmpl" id="view-template">
+    <div class="purchase">
+        <div class="edit-buttons">
+            <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+            <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-close"></span></a>
+        </div>
+        <p class="category">
+            <b>#:categoryName#</b>
+        </p>
+        <p class="date">
+            <b>#=kendo.toString(kendo.parseDate(date), "MM-dd-yyyy")#</b>
+        </p>
+        <p>
+            <b class="label">Payee</b>
+            <span class="payee">#:payee#</span>
+        </p>
+        <p>
+            <b class="label">Memo</b>
+            <span class="memo">#=typeof memo == "undefined" || memo == null ? "" : memo#</span>
+        </p>
+        <span class="amount">$#:amount#</span>
+    </div>
+</script>
+
+<script type="text/x-kendo-tmpl" id="edit-template">
+    <div class="purchase">
+        <div class="edit-buttons">
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+        </div>
+        <p class="category">
+            <input id="edit-category" data-bind="value:categoryId" />
+        </p>
+        <p class="date">
+            <input id="edit-date" data-bind="value:date" name="date" required="required" />
+        </p>
+        <p>
+            <b class="label">Payee</b>
+            <input type="text" id="edit-payee" maxlength="150" class="k-textbox" data-bind="value:payee" name="payee" required="required" />
+        </p>
+        <p>
+            <b class="label">Memo</b>
+            <input type="text" id="edit-memo" maxlength="300" class="k-textbox" data-bind="value:memo" name="memo" />
+        </p>
+        <span class="amount">
+            $
+            <input type="number" id="edit-amount" data-bind="value:amount" name="amount" required="required" />
+        </span>
+    </div>
+</script>
+
+<div id="purchase-list"></div>
+
+<script src="/js/site.js"></script>

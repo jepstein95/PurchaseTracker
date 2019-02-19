@@ -4,33 +4,31 @@ USE purchase_tracker;
 
 CREATE TABLE categories
 (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  name VARCHAR(150) NOT NULL,
-  PRIMARY KEY (id)
+  id INT PRIMARY KEY IDENTITY,
+  name VARCHAR(150) NOT NULL
 );
 
 CREATE TABLE purchases
 (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  category_id INT UNSIGNED NOT NULL,
+  id INT PRIMARY KEY IDENTITY,
+  category_id INT NOT NULL,
   payee VARCHAR(150) NOT NULL,
   amount DECIMAL(6, 2) NOT NULL,
   date DATE NOT NULL,
   memo VARCHAR(300),
-  PRIMARY KEY (id),
   FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 
 INSERT INTO categories VALUES
-(1, 'Housing'),
-(2, 'Utilities'),
-(3, 'Food'),
-(4, 'Health Care'),
-(5, 'Clothing'),
-(6, 'Other Essentials'),
-(7, 'Non Essentials');
+('Housing'),
+('Utilities'),
+('Food'),
+('Health Care'),
+('Clothing'),
+('Other Essentials'),
+(7'Non Essentials');
 
 INSERT INTO purchases VALUES
-(NULL, 3, 'Kroger', 13.25, '2019-02-15', 'Weekly groceries'),
-(NULL, 1, 'Landlord', 600, '2019-02-16', NULL),
-(NULL, 5, 'Gap', 80.50, '2019-02-18' , 'New shirts');
+(3, 'Kroger', 13.25, '2019-02-15', 'Weekly groceries'),
+(1, 'Landlord', 600, '2019-02-16', NULL),
+(5, 'Gap', 80.50, '2019-02-18' , 'New shirts');
