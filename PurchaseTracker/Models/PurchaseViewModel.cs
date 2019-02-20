@@ -3,7 +3,7 @@ namespace PurchaseTracker.Models
 {
     public class PurchaseViewModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public int CategoryId { get; set; }
 

@@ -11,12 +11,13 @@
                 dataType: "json",
                 type: "POST"
             },
-            delete: {
-                url: "/Home/DeletePurchase",
+            destroy: {
+                url: "/Home/DestroyPurchase",
                 dataType: "json",
                 type: "POST"
             },
-            create: {url: "/Home/CreatePurchase",
+            create: {
+                url: "/Home/CreatePurchase",
                 dataType: "json",
                 type: "POST"
             },
@@ -35,10 +36,38 @@
                     categoryId: { type: "number", validation: { required: true } },
                     categoryName: { type: "string" },
                     date: { type: "date", validation: { required: true } },
+                    amount: { type: "number", validation: { required: true } },
                     payee: { type: "string", validation: { required: true } },
-                    memo: { type: "string"}
+                    memo: { type: "string" }
                 }
             }
+        },
+        sort: { field: "date", dir: "desc" },
+        change: function(e) {
+            var aggString;
+            var dataObj = this.data();
+            var count = dataObj.length;
+            if (count) {
+                var sum = 0;
+                for (var i = 0; i < dataObj.length; i++) {
+                    sum += dataObj[i].amount;
+                }
+                var avg = 1.0 * sum / count;
+                aggString = "Purchases: " + count + " | Purchase sum: " + sum.toFixed(2) + " | Purchase average: " + avg;
+            }
+            else
+            {
+                aggString = "No purchases to view";
+            }
+            $("#aggregates").text(aggString);
+        },
+        purchaseAggregates: function() {
+            var sum = 0;
+            var dataObj = this.data();
+            for (var i = 0; i < dataObj.length; i++) {
+                sum += dataObj[i].amount;
+            }
+            return { sum: sum, avg: 1.0 * sum / i };
         }
     });
 
@@ -70,17 +99,17 @@
     }).data("kendoListView");
 
     purchaseList.bind("edit", function(e) {
-        var categoryList = $("#edit-category").kendoDropDownList({
+        $("#edit-category").kendoDropDownList({
             dataSource: categories,
             dataTextField: "name",
             dataValueField: "id"
          }).data("kendoDropDownList");
 
-        var datePicker = $("#edit-date").kendoDatePicker();
+        $("#edit-date").kendoDatePicker();
     });
 
-    $(document).on('click','.add-button', function(e) {
-        var id = $(e.target).data("id");
-        window.e = e;
+    $("#add-purchase").click(function(e) {
+        var purchaseList = $("#purchase-list").data("kendoListView");
+        purchaseList.add();
     });
 });

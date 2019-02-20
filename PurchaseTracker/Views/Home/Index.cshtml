@@ -3,56 +3,86 @@
 }
 
 <script type="text/x-kendo-tmpl" id="view-template">
-    <div class="purchase">
-        <div class="edit-buttons">
-            <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
-            <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-close"></span></a>
+    <div class="card purchase-card">
+        <div class="card-body">
+            <div class="edit-buttons">
+                <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span>Edit</a>
+                <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-close"></span>Delete</a>
+            </div>
+            <form>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label>Category</label>
+                        <input class="form-control" value="#:categoryName#" readonly />
+                    </div>
+                    <div class="form-group col">
+                        <label>Date</label>
+                        <input class="form-control" value="#=kendo.toString(kendo.parseDate(date), 'MM-dd-yyyy')#" readonly />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label>Payee</label>
+                        <input class="form-control" value="#:payee#" readonly />
+                    </div>
+                    <div class="form-group col">
+                        <label>Amount</label>
+                        <input class="form-control" value="$#:amount#" readonly />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Memo</label>
+                    <input class="form-control" value="#=typeof memo == 'undefined' || memo == null ? '' : memo#" readonly />
+                </div>
+            </form>
         </div>
-        <p class="category">
-            <b>#:categoryName#</b>
-        </p>
-        <p class="date">
-            <b>#=kendo.toString(kendo.parseDate(date), "MM-dd-yyyy")#</b>
-        </p>
-        <p>
-            <b class="label">Payee</b>
-            <span class="payee">#:payee#</span>
-        </p>
-        <p>
-            <b class="label">Memo</b>
-            <span class="memo">#=typeof memo == "undefined" || memo == null ? "" : memo#</span>
-        </p>
-        <span class="amount">$#:amount#</span>
     </div>
 </script>
 
 <script type="text/x-kendo-tmpl" id="edit-template">
-    <div class="purchase">
-        <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+    <div class="card purchase-card">
+        <div class="card-body">
+            <div class="edit-buttons">
+                <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span>Save</a>
+                <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span>Cancel</a>
+            </div>
+            <form>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label>Category</label>
+                        <input id="edit-category" class="form-control" data-bind="value:categoryId" required />
+                    </div>
+                    <div class="form-group col">
+                        <label>Date</label>
+                        <input id="edit-date" class="form-control" data-bind="value:date" required />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label>Payee</label>
+                        <input type="text" class="form-control" maxlength="150" data-bind="value:payee" required />
+                    </div>
+                    <div class="form-group col">
+                        <label>Amount</label>
+                        <input type="number" class="form-control" data-bind="value:amount" min="0" step="0.01" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Memo</label>
+                    <input type="text" class="form-control" maxlength="300" data-bind="value:memo" />
+                </div>
+            </form>
         </div>
-        <p class="category">
-            <input id="edit-category" data-bind="value:categoryId" />
-        </p>
-        <p class="date">
-            <input id="edit-date" data-bind="value:date" name="date" required="required" />
-        </p>
-        <p>
-            <b class="label">Payee</b>
-            <input type="text" id="edit-payee" maxlength="150" class="k-textbox" data-bind="value:payee" name="payee" required="required" />
-        </p>
-        <p>
-            <b class="label">Memo</b>
-            <input type="text" id="edit-memo" maxlength="300" class="k-textbox" data-bind="value:memo" name="memo" />
-        </p>
-        <span class="amount">
-            $
-            <input type="number" id="edit-amount" data-bind="value:amount" name="amount" required="required" />
-        </span>
     </div>
 </script>
 
-<div id="purchase-list"></div>
+<div id="container" class="card">
+    <div class="card-header text-center">
+        <h1>Purchases</h1>
+        <button id="add-purchase" class="k-button"><span class="k-icon k-i-add"></span>Add purchase</button>
+     </div>
+    <div id="purchase-list" class="card-body"></div>
+    <div class="card-footer text-center text-muted"><p id="aggregates"></p></div>
+</div>
 
 <script src="/js/site.js"></script>

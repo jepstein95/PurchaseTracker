@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-using Kendo.Mvc.Extensions;
-using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
@@ -15,12 +12,18 @@ namespace PurchaseTracker.Controllers
 {
     public class HomeController : Controller
     {
+        // Database context
         private readonly PurchasesDbContext _context;
+
+        // Category list
         private Dictionary<int, string> _categories;
 
         public HomeController(PurchasesDbContext context)
         {
             _context = context;
+
+            // Maintain a cache of the category list so we don't have to hit the
+            // database every time we need to look up a category name
             _categories = new Dictionary<int, string>();
             foreach (Category category in _context.Categories)
             {
@@ -28,17 +31,20 @@ namespace PurchaseTracker.Controllers
             }
         }
 
+        // Index view
         public IActionResult Index()
         {
             return View();
         }
 
+        // Error view
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        // API: GET /Home/GetCategories
         [HttpGet]
         public ActionResult GetCategories()
         {
@@ -50,6 +56,8 @@ namespace PurchaseTracker.Controllers
             return Json(categoryList);
         }
 
+
+        // API: GET /Home/GetPurchases
         [HttpGet]
         public ActionResult GetPurchases()
         {
@@ -71,6 +79,7 @@ namespace PurchaseTracker.Controllers
             return Json(viewModels);
         }
 
+        // API: POST /Home/UpdatePurchase
         [HttpPost]
         public ActionResult UpdatePurchase()
         {
@@ -81,8 +90,9 @@ namespace PurchaseTracker.Controllers
             return Json(model);
         }
 
+        // API: POST /Home/DestroyPurchase
         [HttpPost]
-        public ActionResult DeletePurchase()
+        public ActionResult DestroyPurchase()
         {
             PurchaseViewModel model = GetPurchaseViewModel();
             Purchase purchase = _context.Purchases.Find(model.Id);
@@ -91,6 +101,7 @@ namespace PurchaseTracker.Controllers
             return Json(model);
         }
 
+        // API: POST /Home/CreatePurchase
         [HttpPost]
         public ActionResult CreatePurchase()
         {
@@ -102,12 +113,14 @@ namespace PurchaseTracker.Controllers
             return Json(model);
         }
 
+        // Deserialize the request string to an instance of PurchaseViewModel
         private PurchaseViewModel GetPurchaseViewModel()
         {
             StringValues modelsString = Request.Form["models"];
             return JsonConvert.DeserializeObject<List<PurchaseViewModel>>(modelsString).First();
         }
 
+        // Update a Purchase from a PurchaseViewModel
         private void UpdatePurchase(ref Purchase p, ref PurchaseViewModel model)
         {
             p.CategoryId = model.CategoryId;
