@@ -60,14 +60,6 @@
                 aggString = "No purchases to view";
             }
             $("#aggregates").text(aggString);
-        },
-        purchaseAggregates: function() {
-            var sum = 0;
-            var dataObj = this.data();
-            for (var i = 0; i < dataObj.length; i++) {
-                sum += dataObj[i].amount;
-            }
-            return { sum: sum, avg: 1.0 * sum / i };
         }
     });
 
