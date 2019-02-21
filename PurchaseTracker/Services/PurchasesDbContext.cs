@@ -10,9 +10,6 @@ namespace PurchaseTracker.Services
         public DbSet<Category> Categories { get; set; }
 
         public PurchasesDbContext(DbContextOptions<PurchasesDbContext> options)
-               : base(options)
-        {
-            Database.EnsureCreated();
-        }
+            : base(options) { }
     }
 }

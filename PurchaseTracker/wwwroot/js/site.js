@@ -27,6 +27,11 @@
                 }
             }
         },
+        error: function (e) {
+            if (e.status == "customerror") {
+                alert("Error: " + e.errors);
+            }
+        },
         batch: true,
         schema: {
             model: {
